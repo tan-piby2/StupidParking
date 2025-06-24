@@ -4,6 +4,10 @@ import Model.Vehicle;
 import Model.Enum.VehicleType;
 import Service.SingletonService;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Main {
     public static void main(String[] args) {
         // Initialize the singleton service
@@ -25,5 +29,29 @@ public class Main {
             System.out.println("Vehicle added: " + v.getVehicleNumber() + ", Type: " + v.getVehicleType())
         );
         SingletonService singletonService2 = SingletonService.getInstance();
+
+        practiceJavaStream();
+    }
+
+    private static void practiceJavaStream() {
+
+        List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "Andrew","Abel","Abel","Anthony", "Abraham", "Ava", "Aiden", "Aaron");
+
+
+        String filteredNames=names.stream()
+                .filter(name -> name.startsWith("A"))
+                .map(String::toUpperCase)
+                .sorted()
+                .distinct()
+                .limit(6)
+                .skip(2)
+                //.collect(Collectors.toList());
+                //.anyMatch(name -> name.equals("ALICE"));
+                //.count();
+                //.forEach(name -> System.out.println(name));
+                .reduce("", (name1, name2) -> name1 + ", " + name2);
+
+        System.out.println(filteredNames); // Output: [ALICE]
+
     }
 }
