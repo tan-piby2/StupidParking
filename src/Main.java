@@ -7,7 +7,7 @@ import Service.SingletonService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.util.function.*;
 public class Main {
     public static void main(String[] args) {
         // Initialize the singleton service
@@ -31,6 +31,7 @@ public class Main {
         SingletonService singletonService2 = SingletonService.getInstance();
 
         practiceJavaStream();
+        javaUtilFunctions();
     }
 
     private static void practiceJavaStream() {
@@ -53,5 +54,27 @@ public class Main {
 
         System.out.println(filteredNames); // Output: [ALICE]
 
+    }
+
+    @FunctionalInterface
+    interface Greeting {
+        void sayHello(String name);  // only one abstract method
+    }
+    public static void javaUtilFunctions() {
+
+        Predicate<String> startsWithA = s -> s.startsWith("A"); // predicate returns boolean
+        Function<String, Integer> length = String::length; // function that takes a input and returns its output
+        Consumer<String> printer = System.out::println; // consumer that takes a standard function
+        Supplier<String> greeting = () -> "Hi, there!"; // supplier returns some value; opposite of consumer
+        BinaryOperator<Integer> multiply = (a, b) -> a * b; // Takes two inputs of the same type and returns a result of the same type
+        Greeting greetingLambda = name -> System.out.println("Hello, " + name); // custom functional interface
+        greetingLambda.sayHello("Functional Interface"); // Using the custom functional interface
+
+
+        System.out.println(startsWithA.test("Alice"));      // true
+        System.out.println(length.apply("Hello"));          // 5
+        printer.accept("Tarun here");                       // Tarun here
+        System.out.println(greeting.get());                 // Hi, there!
+        System.out.println(multiply.apply(4, 5));           // 20
     }
 }
